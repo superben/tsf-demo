@@ -1,0 +1,27 @@
+#server:address: 10:175:133:156
+server:
+  port: 8001
+
+spring:
+  application:
+    name: demo-consumer
+  cloud:
+    consul:
+      host: 192.168.1.45
+      port: 80
+      healthCheckPath: /health
+      healthCheckInterval: 10s
+      discovery:
+        preferIpAddress: true
+        heartbeat:
+          enabled: true
+          ttlValue: 30
+          ttlUnit: s
+
+logging:
+  level:
+    ROOT: INFO
+  # path: /var/log/tsf/demo
+  file: /var/log/tsf/demo/demo-consumer.log
+#    org:springframework:web:servlet:DispatcherServlet: DEBUG
+#logging:level:org:springframework:cloud:sleuth:log: TRACE

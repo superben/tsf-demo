@@ -1,0 +1,21 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: provider-deployment
+spec:
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      # unlike pod-nginx.yaml, the name is not included in the meta data as a unique name is
+      # generated from the deployment name
+      labels:
+        app: provider
+    spec:
+      containers:
+      - name: provider
+        image: 10.0.0.7:60080/tsf/provider:1.0
+        ports:
+        - containerPort: 8002
+        env:
+        - name: server.port 
+          value: 8003
