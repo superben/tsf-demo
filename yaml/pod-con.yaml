@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: consumer
+spec:
+
+  restartPolicy: Never
+
+  volumes:
+  - name: shared-data
+    emptyDir: {}
+
+  containers:
+
+  - name: consumer-ctr
+    image: 172.16.0.32:60080/tsf/consumer
+    volumeMounts:
+    - name: shared-data
+      mountPath: /app/servlet/logs
+
+  - name: filebeat-ctr
+    image: 172.16.0.32:60080/tsf/agent
+    env:
+      - name: INSTANCE_ID
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.name
+      - name: LOCAL_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
+      - name: APP_ID
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.name
+      - name: NAMESPACE_ID
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.namespace
+    volumeMounts:
+    - name: shared-data
+      mountPath: /app/servlet/logs
+#      readOnly: true

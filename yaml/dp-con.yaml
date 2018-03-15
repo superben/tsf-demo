@@ -1,0 +1,19 @@
+apiVersion: apps/v1beta1 # for versions before 1.6.0 use extensions/v1beta1
+kind: Deployment
+metadata:
+  name: consumer
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: consumer
+    spec:
+      containers:
+      - name: nginx
+        image: 172.16.0.32:60080/tsf/consumer
+        env:
+          - name: RUN_ARGS
+            value: "--spring.cloud.consul.port=80 --spring.cloud.consul.host=192.168.1.45 --spring.cloud.consul.discovery.heartbeat.ttlValue=15"
+        ports:
+        - containerPort: 8002

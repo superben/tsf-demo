@@ -15,7 +15,7 @@ spring:
         preferIpAddress: true
         heartbeat:
           enabled: true
-          ttlValue: 30
+          ttlValue: 15
           ttlUnit: s
 #      instanceId: ${spring.application.name}:${random.value}
 #      instanceId: ${spring.application.name}
@@ -27,6 +27,7 @@ logging:
     ROOT: INFO
     org.springframework.cloud.sleuth.log: TRACE
     org.springframework.web.servlet.DispatcherServlet: DEBUG
+    org.springframework.cloud.consul.*: TRACE
 
   # path: /var/log/tsf/demo
   file: /var/log/tsf/demo/demo-provider.log

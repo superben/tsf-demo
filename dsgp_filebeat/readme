@@ -1,0 +1,15 @@
+1. 修改配置文件dsgp_filebeat.yml
+
+INSTALL_EXEC_PATH       应用启动路径
+INSTALL_INSTANCE_ID     应用实例ID
+INSTALL_LOCAL_IP        应用实例IP
+INSTALL_DSGP_ID         TSF ID
+INSTALL_APP_ID          应用ID
+INSTALL_GROUP_ID        应用分组ID
+INSTALL_CLUSTER_ID      集群ID
+INSTALL_NAMESPACE_ID    命名空间ID
+
+修改ES地址
+
+2. 启动命令
+./dsgp_filebeat -c dsgp_filebeat.yml

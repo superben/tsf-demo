@@ -1,6 +1,7 @@
 FROM openjdk:alpine
 
 ADD ./target/tsf-demo-consumer-0.0.1-SNAPSHOT.jar /app/
-CMD ["sh", "-c", "java ${JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom -jar /app/tsf-demo-consumer-0.0.1-SNAPSHOT.jar ${RUN_ARGS}"]
+RUN mkdir -p /app/servlet/logs
+CMD ["sh", "-c", "cd /app; java ${JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom -jar /app/tsf-demo-consumer-0.0.1-SNAPSHOT.jar ${RUN_ARGS}"]
 
 EXPOSE 8001

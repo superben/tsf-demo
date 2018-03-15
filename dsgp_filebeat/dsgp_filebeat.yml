@@ -1,0 +1,59 @@
+###################### Filebeat Configuration Example #########################
+
+# This file is an example configuration file highlighting only the most common
+# options. The filebeat.full.yml file from the same directory contains all the
+# supported options with more comments. You can use it as a reference.
+#
+# You can find the full configuration reference here:
+# https://www.elastic.co/guide/en/beats/filebeat/index.html
+
+#=========================== Filebeat prospectors =============================
+
+filebeat.prospectors:
+
+- input_type: log
+  paths:
+    - ${APP_PATH:/app}/servlet/logs/trace_log*
+
+  fields:
+    pipename: "dsgp_servlet_tracing"
+    instance_id: ${INSTANCE_ID}
+    srv_ip: ${LOCAL_IP}
+    dsgp_id: ${DSGP_ID:tsf}
+    app_id: ${APP_ID}
+    group_id: ${GROUP_ID:services}
+    cluster_id: ${CLUSTER_ID:k8s_cluster}
+    namespace_id: ${NAMESPACE_ID:default}
+  harvester_buffer_size: 1638400
+  scan_frequency: 2s
+  json.keys_under_root: true
+  json.add_error_key: true
+  close_timeout: 0.5h
+
+#========================= Filebeat global options ============================
+
+filebeat.spool_size: 102400
+filebeat.idle_timeout: 2s
+filebeat.shutdown_timeout: 5
+
+#================================ General =====================================
+
+max_procs: 4
+
+#================================ Processors =====================================
+
+processors:
+- drop_fields:
+    fields: ["beat", "input_type", "source", "offset"]
+
+#================================ Outputs =====================================
+
+#-------------------------- Elasticsearch output ------------------------------
+
+output.elasticsearch:
+  hosts: ['192.168.1.37:9200', '192.168.1.38:9200', '192.168.1.40:9200']
+  worker: 2
+  pipeline: "%{[fields.pipename]}"
+
+  bulk_max_size: 512
+  flush_interval: 2s
