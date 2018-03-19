@@ -9,17 +9,30 @@ spec:
   volumes:
   - name: shared-data
     emptyDir: {}
+  - name: log-data
+    persistentVolumeClaim:
+      claimName: tsf-pvc
+
+  nodeSelector:
+    nodename: master
 
   containers:
 
   - name: consumer-ctr
     image: 172.16.0.32:60080/tsf/consumer
+    imagePullPolicy: Always
+    env:
+      - name: RUN_ARGS
+        value: "--spring.cloud.consul.discovery.heartbeat.ttlValue=30"
     volumeMounts:
     - name: shared-data
       mountPath: /app/servlet/logs
+    - name: log-data
+      mountPath: /var/log/tsf/demo
 
   - name: filebeat-ctr
     image: 172.16.0.32:60080/tsf/agent
+    imagePullPolicy: Always
     env:
       - name: INSTANCE_ID
         valueFrom:
