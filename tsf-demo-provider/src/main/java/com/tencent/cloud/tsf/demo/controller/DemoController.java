@@ -20,11 +20,11 @@ public class DemoController {
         return "demo provider echos\n";
     }
 
-    @RequestMapping(value = "/health")
-    public String health() {
-        logger.info("health is being called");
-        return "demo provider healthy\n";
-    }
+//    @RequestMapping(value = "/health")
+//    public String health() {
+//        logger.info("health is being called");
+//        return "demo provider healthy\n";
+//    }
 
     @RequestMapping(value = "/provider")
     public String provider() {
