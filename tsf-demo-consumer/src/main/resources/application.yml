@@ -9,8 +9,8 @@ spring:
     consul:
       host: 192.168.1.45
       port: 80
-      healthCheckPath: /health
-      healthCheckInterval: 10s
+#      healthCheckPath: /health
+#      healthCheckInterval: 10s
       discovery:
         preferIpAddress: true
         heartbeat:
